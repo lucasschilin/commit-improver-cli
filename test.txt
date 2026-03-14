@@ -1,1 +1,1 @@
-refactor: removes debug messages and improve preview texts
+feat: implement configurations files reading and implement configurations from multiple sources

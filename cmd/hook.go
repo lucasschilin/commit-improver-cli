@@ -3,13 +3,11 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"log"
-	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	"github.com/lucasschilin/commit-improver-cli/internal/ai"
 	"github.com/lucasschilin/commit-improver-cli/internal/commit"
+	"github.com/lucasschilin/commit-improver-cli/internal/config"
 	"github.com/lucasschilin/commit-improver-cli/internal/git"
 	"github.com/lucasschilin/commit-improver-cli/internal/prompt"
 	"github.com/lucasschilin/commit-improver-cli/internal/ui"
@@ -20,6 +18,17 @@ var hookCmd = &cobra.Command{
 	Use:   "hook",
 	Short: "Intercept commit messages",
 	Run: func(cmd *cobra.Command, args []string) {
+		repoRoot, err := git.GetRepoRoot()
+		if err != nil {
+			fmt.Println("Not inside a git repository")
+			return
+		}
+		cfg, err := config.ResolveConfig(repoRoot)
+		if err != nil {
+			fmt.Println("Config error:", err)
+			return
+		}
+
 		if len(args) == 0 {
 			fmt.Println("Commit message file not provided")
 			return
@@ -39,34 +48,23 @@ var hookCmd = &cobra.Command{
 			return
 		}
 
-		diff = git.LimitDiff(diff, 200)
+		diff = git.LimitDiff(diff, cfg.DiffLimit)
 
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
-		//temporary
-		if err := godotenv.Load(); err != nil {
-			log.Println("Any .env file finded.")
+		aiCfg := ai.Config{
+			Provider: cfg.Provider,
+			Model:    cfg.Model,
+			APIKey:   cfg.Gemini.APIKey,
 		}
-		apiKey := os.Getenv("API_KEY")
-		if apiKey == "" {
-			fmt.Println("API_KEY not set")
-			return
-		}
-
-		cfg := ai.Config{
-			Provider: "gemini",
-			APIKey:   apiKey,
-			Model:    "gemini-2.5-flash",
-		}
-
-		provider, err := ai.NewProvider(ctx, cfg)
+		provider, err := ai.NewProvider(ctx, aiCfg)
 		if err != nil {
 			fmt.Println("Provider error:", err)
 			return
 		}
 
-		prompt := prompt.Build(message, diff, "en")
+		prompt := prompt.Build(message, diff, cfg.Language)
 
 		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {

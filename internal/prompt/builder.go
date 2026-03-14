@@ -12,7 +12,6 @@ func Build(message string, diff string, language string) string {
 		- Translate to %s
 		- Maximum 72 characters
 		- Use imperative mood
-		- Be concise
 		- Return only the commit message
 
 		Original message:

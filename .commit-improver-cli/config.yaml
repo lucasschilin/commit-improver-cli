@@ -16,5 +16,5 @@ diff_limit: 200 #REQUIRED
 
 gemini:
   # Gemini API key
-  api_key: #REQUIRED
+  api_key: #REQUIRED (not indicated for --repo configurations, as it will be versioned with the code)
 
