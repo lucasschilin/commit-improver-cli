@@ -1,1 +1,1 @@
-implementado integração com gemini
+refactor: removes debug messages and improve preview texts

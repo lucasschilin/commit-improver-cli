@@ -7,7 +7,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "s5n-cim",
+	Use:   "cim-cli",
 	Short: "Commit Improver CLI",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Commit Improver CLI running")

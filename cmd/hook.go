@@ -33,9 +33,6 @@ var hookCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Println("Original message:")
-		fmt.Println(message)
-
 		diff, err := git.GetStagedDiff()
 		if err != nil {
 			fmt.Println("Error reading diff:", err)
@@ -44,12 +41,10 @@ var hookCmd = &cobra.Command{
 
 		diff = git.LimitDiff(diff, 200)
 
-		fmt.Println("Diff:")
-		fmt.Println(diff)
-
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
+		//temporary
 		if err := godotenv.Load(); err != nil {
 			log.Println("Any .env file finded.")
 		}
@@ -79,9 +74,6 @@ var hookCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Println("Improved message:")
-		fmt.Println(improvedMessage)
-
 		ui.ShowPreview(message, improvedMessage)
 
 		accepted, err := ui.Confirm("Apply improved commit message?")
@@ -91,7 +83,6 @@ var hookCmd = &cobra.Command{
 		}
 
 		if !accepted {
-			fmt.Println("Keeping with original commit message.")
 			return
 		}
 
@@ -100,8 +91,6 @@ var hookCmd = &cobra.Command{
 			fmt.Println(err)
 			return
 		}
-
-		fmt.Println("Commit message updated.")
 
 	},
 }
