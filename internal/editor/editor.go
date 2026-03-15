@@ -20,6 +20,35 @@ func Open(path string) error {
 	return cmd.Run()
 }
 
+func OpenTempFile() (string, error) {
+	file, err := os.CreateTemp("", "cim-cli-commit-*.txt")
+	if err != nil {
+		return "", err
+	}
+
+	path := file.Name()
+	file.Close()
+	defer os.Remove(path)
+
+	editor := detectEditor()
+
+	editCmd := exec.Command("sh", "-c", editor+" "+path)
+	editCmd.Stdin = os.Stdin
+	editCmd.Stdout = os.Stdout
+	editCmd.Stderr = os.Stderr
+
+	if err := editCmd.Run(); err != nil {
+		return "", err
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+
+	return string(data), nil
+}
+
 func detectEditor() string {
 
 	// variável do git

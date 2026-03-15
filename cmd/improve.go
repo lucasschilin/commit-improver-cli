@@ -3,10 +3,12 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/lucasschilin/cim-cli/internal/ai"
 	"github.com/lucasschilin/cim-cli/internal/config"
+	"github.com/lucasschilin/cim-cli/internal/editor"
 	"github.com/lucasschilin/cim-cli/internal/git"
 	"github.com/lucasschilin/cim-cli/internal/prompt"
 	"github.com/lucasschilin/cim-cli/internal/ui"
@@ -23,6 +25,16 @@ var improveCmd = &cobra.Command{
 
 		if messageFlag != "" {
 			message = messageFlag
+		}
+
+		if message == "" {
+			msg, err := editor.OpenTempFile()
+			if err != nil {
+				fmt.Println("Failed to open editor:", err)
+				return
+			}
+
+			message = strings.TrimSpace(msg)
 		}
 
 		if message == "" {
