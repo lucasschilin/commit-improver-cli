@@ -79,5 +79,5 @@ var improveCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(improveCmd)
 
-	improveCmd.Flags().StringVar(&messageFlag, "message", "", "Commit message to improve")
+	improveCmd.Flags().StringVarP(&messageFlag, "message", "m", "", "Commit message to improve")
 }

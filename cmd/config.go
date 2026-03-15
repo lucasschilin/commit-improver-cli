@@ -64,5 +64,5 @@ func init() {
 	configCmd.Flags().BoolVar(&repoFlag, "repo", false, "Edit shared repo config")
 	configCmd.Flags().BoolVar(&repoUserFlag, "repo-user", false, "Edit user config for this repo")
 
-	configCmd.Flags().BoolVar(&editorFlag, "editor", false, "Edit config using editor")
+	configCmd.Flags().BoolVarP(&editorFlag, "editor", "e", false, "Edit config using editor")
 }

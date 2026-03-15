@@ -1,1 +1,1 @@
-feat: implement spinner at commit improvement action
+remove opção de utilizar o comando imrpove juntamnete com o esquema de pipe
