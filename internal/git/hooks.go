@@ -50,3 +50,27 @@ cim-cli hook "$1"
 
 	return nil
 }
+
+func RemoveCommitMsgHook(repoRoot string) error {
+	path := CommitMsgHookPath(repoRoot)
+
+	if !HookExists(path) {
+		return fmt.Errorf("cim-cli hook not installed")
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	if !IsCommitImproverCLIHook(string(data)) {
+		return fmt.Errorf("commit-msg is not managed by cim-cli")
+	}
+
+	err = os.Remove(path)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -1,1 +1,1 @@
-feat: Allow final edit of improved (or not) commit message
+feat: implement 'deinit' command, feature who removes commit-msg from .git/hooks
