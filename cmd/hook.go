@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -18,35 +19,30 @@ import (
 var hookCmd = &cobra.Command{
 	Use:   "hook",
 	Short: "Intercept commit messages",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
-			fmt.Println("Not inside a git repository")
-			return
+			return fmt.Errorf("Not inside a git repository: %s", err)
 		}
 		cfg, err := config.Resolve(repoRoot)
 		if err != nil {
-			fmt.Println("Config error:", err)
-			return
+			return fmt.Errorf("Config error: %s", err)
 		}
 
 		if len(args) == 0 {
-			fmt.Println("Commit message file not provided")
-			return
+			return errors.New("Commit message file not provided")
 		}
 
 		path := args[0]
 
 		message, err := commit.ReadCommitMessage(path)
 		if err != nil {
-			fmt.Println("Error reading commit message:", err)
-			return
+			return fmt.Errorf("Error reading commit message: %s", err)
 		}
 
 		diff, err := git.GetStagedDiff()
 		if err != nil {
-			fmt.Println("Error reading diff:", err)
-			return
+			return fmt.Errorf("Error reading diff: %s", err)
 		}
 
 		diff = git.LimitDiff(diff, cfg.DiffLimit)
@@ -61,8 +57,7 @@ var hookCmd = &cobra.Command{
 		}
 		provider, err := ai.NewProvider(ctx, aiCfg)
 		if err != nil {
-			fmt.Println("Provider error:", err)
-			return
+			return fmt.Errorf("Provider error: %s", err)
 		}
 
 		prompt := prompt.Build(message, diff, cfg.Language)
@@ -74,8 +69,7 @@ var hookCmd = &cobra.Command{
 		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {
 			spinner.Stop()
-			fmt.Println("✖ Failed to improve commit", err)
-			return
+			return fmt.Errorf("✖ Failed to improve commit: %s", err)
 		}
 
 		spinner.Stop()
@@ -85,33 +79,32 @@ var hookCmd = &cobra.Command{
 
 		accepted, err := ui.Confirm("Apply improved commit message?")
 		if err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
 
 		if accepted {
 			err = commit.WriteCommitMessage(path, improvedMessage)
 			if err != nil {
-				fmt.Println(err)
-				return
+				return err
 			}
 		}
 
 		if !cfg.AllowFinalEdit {
-			return
+			return nil
 		}
 
 		editCommitMessage, err := ui.Confirm("Do you want to make a final edit to the commit message?")
 		if err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
 		if editCommitMessage {
 			err := editor.Open(path)
 			if err != nil {
-				fmt.Println("failed to open editor:", err)
+				return fmt.Errorf("failed to open editor: %s", err)
 			}
 		}
+
+		return nil
 	},
 }
 
