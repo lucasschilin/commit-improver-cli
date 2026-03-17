@@ -22,11 +22,11 @@ var hookCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
-			return fmt.Errorf("Not inside a git repository: %s", err)
+			return fmt.Errorf("Not inside a git repository: %w", err)
 		}
 		cfg, err := config.Resolve(repoRoot)
 		if err != nil {
-			return fmt.Errorf("Config error: %s", err)
+			return fmt.Errorf("Config error: %w", err)
 		}
 
 		if len(args) == 0 {
@@ -37,12 +37,12 @@ var hookCmd = &cobra.Command{
 
 		message, err := commit.ReadCommitMessage(path)
 		if err != nil {
-			return fmt.Errorf("Error reading commit message: %s", err)
+			return fmt.Errorf("Error reading commit message: %w", err)
 		}
 
 		diff, err := git.GetStagedDiff()
 		if err != nil {
-			return fmt.Errorf("Error reading diff: %s", err)
+			return fmt.Errorf("Error reading diff: %w", err)
 		}
 
 		diff = git.LimitDiff(diff, cfg.DiffLimit)
@@ -57,7 +57,7 @@ var hookCmd = &cobra.Command{
 		}
 		provider, err := ai.NewProvider(ctx, aiCfg)
 		if err != nil {
-			return fmt.Errorf("Provider error: %s", err)
+			return fmt.Errorf("Provider error: %w", err)
 		}
 
 		prompt := prompt.Build(message, diff, cfg.Language)
@@ -69,7 +69,7 @@ var hookCmd = &cobra.Command{
 		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {
 			spinner.Stop()
-			return fmt.Errorf("✖ Failed to improve commit: %s", err)
+			return fmt.Errorf("✖ Failed to improve commit: %w", err)
 		}
 
 		spinner.Stop()
@@ -100,7 +100,7 @@ var hookCmd = &cobra.Command{
 		if editCommitMessage {
 			err := editor.Open(path)
 			if err != nil {
-				return fmt.Errorf("failed to open editor: %s", err)
+				return fmt.Errorf("failed to open editor: %w", err)
 			}
 		}
 
