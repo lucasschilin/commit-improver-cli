@@ -47,7 +47,7 @@ var hookCmd = &cobra.Command{
 
 		diff = git.LimitDiff(diff, cfg.DiffLimit)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 		defer cancel()
 
 		aiCfg := ai.Config{
