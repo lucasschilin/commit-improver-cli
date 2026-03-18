@@ -41,14 +41,6 @@ func Resolve(repoRoot string) (*Config, error) {
 
 func mergeConfig(dst *Config, src *Config) {
 
-	if src.Provider != "" {
-		dst.Provider = src.Provider
-	}
-
-	if src.Model != "" {
-		dst.Model = src.Model
-	}
-
 	if src.Language != "" {
 		dst.Language = src.Language
 	}
@@ -57,8 +49,20 @@ func mergeConfig(dst *Config, src *Config) {
 		dst.DiffLimit = src.DiffLimit
 	}
 
+	if src.ImprovementRequestTimeout != 0 {
+		dst.ImprovementRequestTimeout = src.ImprovementRequestTimeout
+	}
+
 	if src.AllowFinalEdit == true {
 		dst.AllowFinalEdit = src.AllowFinalEdit
+	}
+
+	if src.Provider != "" {
+		dst.Provider = src.Provider
+	}
+
+	if src.Model != "" {
+		dst.Model = src.Model
 	}
 
 	if src.Gemini.APIKey != "" {

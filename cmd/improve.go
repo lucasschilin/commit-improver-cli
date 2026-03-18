@@ -50,7 +50,7 @@ var improveCmd = &cobra.Command{
 			return fmt.Errorf("Config error: %v", err)
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.ImprovementRequestTimeout)*time.Second)
 		defer cancel()
 
 		aiCfg := ai.Config{
