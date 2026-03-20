@@ -15,7 +15,7 @@ var configShowCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, _ := git.GetRepoRoot()
 		if repoRoot == "" {
-			return errors.New("Not  inside a git repository")
+			return errors.New("Not inside a git repository")
 		}
 
 		var (

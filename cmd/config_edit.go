@@ -15,6 +15,9 @@ var configEditCmd = &cobra.Command{
 	Short: "Edit configuration",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, _ := git.GetRepoRoot()
+		if repoRoot == "" {
+			return errors.New("Not inside a git repository")
+		}
 
 		var path string
 
