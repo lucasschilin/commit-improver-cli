@@ -18,7 +18,7 @@ import (
 
 var (
 	messageFlag string
-	debugFlag   bool
+	promptFlag  bool
 )
 
 var improveCmd = &cobra.Command{
@@ -64,7 +64,7 @@ var improveCmd = &cobra.Command{
 
 		prompt := prompt.Build(message, "", cfg.Language)
 
-		if debugFlag {
+		if promptFlag {
 			fmt.Println("=== GENERATED PROMPT ===")
 			fmt.Println(prompt)
 			return nil
@@ -99,5 +99,5 @@ func init() {
 	rootCmd.AddCommand(improveCmd)
 
 	improveCmd.Flags().StringVarP(&messageFlag, "message", "m", "", "Commit message to improve")
-	improveCmd.Flags().BoolVar(&debugFlag, "debug", false, "Enable debug mode, do not send the prompt to the AI and just print the final prompt")
+	improveCmd.Flags().BoolVarP(&promptFlag, "prompt", "p", false, "Prints the final message that would be sent to the LLM.")
 }
