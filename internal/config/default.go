@@ -16,7 +16,7 @@ improvement_request_timeout: 20
 # Allow the user to edit the final commit message. Default: false
 allow_final_edit: false
 
-# LLM provider used to improve commits. Options: 'gemini'. Default: 'gemini'
+# LLM provider used to improve commits. Options: 'gemini' or 'openai'. Default: 'gemini'
 provider: gemini
 
 # Model name used by the provider. Default: 'gemini-2.5-flash'
@@ -24,6 +24,10 @@ model: gemini-2.5-flash
 
 gemini:
   # Gemini API key
+  api_key: # REQUIRED (not indicated for --repo configurations, as it will be versioned with the code)
+  
+openai:
+  # Openai API key
   api_key: # REQUIRED (not indicated for --repo configurations, as it will be versioned with the code)
 
 `
