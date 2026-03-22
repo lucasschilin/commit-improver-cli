@@ -69,7 +69,7 @@ func (c *Config) Validate() error {
 			return errors.New("config: gemini.api_key is required")
 		}
 	case "openai":
-		if c.Gemini.APIKey == "" {
+		if c.Openai.APIKey == "" {
 			return errors.New("config: openai.api_key is required")
 		}
 	}
