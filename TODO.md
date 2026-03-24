@@ -10,3 +10,6 @@
 - [ ] Adicionar testes automatizados
 - [ ] Implementar comando de atualização (`cim-cli update`)
 - [ ] Script de install e update usando curl...install.sh
+- [ ] Salvar logs
+- [ ] Coletar métricas
+- [ ] Adicionar opção de cancelar Commit no `cim-cli hook`
