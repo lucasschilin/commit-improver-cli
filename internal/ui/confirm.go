@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Confirm(question string) (bool, error) {
+func Confirm(question string, cancel bool) (bool, error) {
 	tty, err := os.Open("/dev/tty")
 	if err != nil {
 		return false, nil
@@ -16,7 +16,12 @@ func Confirm(question string) (bool, error) {
 
 	reader := bufio.NewReader(tty)
 
-	fmt.Printf("%s (Y/n): ", question)
+	cancelText := ""
+	if cancel {
+		cancelText = " or (Ctrt+C to cancel)"
+	}
+
+	fmt.Printf("%s (Y/n)%s: ", question, cancelText)
 
 	answer, err := reader.ReadString('\n')
 	if err != nil {

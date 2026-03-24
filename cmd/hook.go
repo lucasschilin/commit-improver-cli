@@ -74,7 +74,7 @@ var hookCmd = &cobra.Command{
 
 		ui.ShowPreview(message, improvedMessage)
 
-		accepted, err := ui.Confirm("Apply improved commit message?")
+		accepted, err := ui.Confirm("Apply improved commit message?", true)
 		if err != nil {
 			return err
 		}
@@ -90,7 +90,7 @@ var hookCmd = &cobra.Command{
 			return nil
 		}
 
-		editCommitMessage, err := ui.Confirm("Do you want to make a final edit to the commit message?")
+		editCommitMessage, err := ui.Confirm("Do you want to make a final edit to the commit message?", true)
 		if err != nil {
 			return err
 		}
