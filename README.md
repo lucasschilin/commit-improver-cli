@@ -19,6 +19,7 @@ Use AI to automatically transform your commits into clear, standardized Conventi
 
 ⭐ If this project helps you, consider giving it a star.
 
+![alt text](docs/demos/hook.gif)
 
 ## Why?
 
