@@ -1,5 +1,9 @@
-# cim-cli (Commit Improver CLI)
-<p align="left">
+<p align="center">
+  
+  # cim-cli (Commit Improver CLI)
+
+</p>
+<p align="center">
   <img src="https://img.shields.io/github/license/lucasschilin/cim-cli" />
   <img src="https://img.shields.io/github/v/release/lucasschilin/cim-cli" />
   <img src="https://img.shields.io/github/downloads/lucasschilin/cim-cli/total" />
