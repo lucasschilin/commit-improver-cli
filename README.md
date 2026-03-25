@@ -1,19 +1,17 @@
 <p align="center">
   
-  # cim-cli (Commit Improver CLI)
+  <img src="docs/images/logo.png" width="200" />
 
 </p>
 <p align="center">
-  <img src="https://img.shields.io/github/license/lucasschilin/cim-cli" />
-  <img src="https://img.shields.io/github/v/release/lucasschilin/cim-cli" />
-  <img src="https://img.shields.io/github/downloads/lucasschilin/cim-cli/total" />
   <img src="https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-blue" />
-  <img src="https://img.shields.io/badge/go-1.25%2B-00ADD8" />
-  <img src="https://img.shields.io/badge/contributions-welcome-brightgreen" />
-  <img src="https://img.shields.io/badge/AI-powered-purple" />
-  <img src="https://img.shields.io/badge/commits-conventional-orange" />
-  <img src="https://img.shields.io/github/stars/lucasschilin/cim-cli?style=social" />
-  
+  <img src="https://img.shields.io/github/v/release/lucasschilin/cim-cli" />
+  <img src="https://img.shields.io/github/release-date/lucasschilin/cim-cli" />
+  <img src="https://img.shields.io/github/stars/lucasschilin/cim-cli?style=flat-square" />
+  </p>
+<p align="center">
+  <img src="https://img.shields.io/github/go-mod/go-version/lucasschilin/cim-cli" />
+  <img src="https://img.shields.io/badge/built%20with-cobra-00ADD8" />
 </p>
 
 
@@ -23,7 +21,7 @@ Use AI to automatically transform your commits into clear, standardized Conventi
 
 ⭐ If this project helps you, consider giving it a star.
 
-![alt text](docs/demos/hook.gif)
+---
 
 ## Why?
 
@@ -46,6 +44,8 @@ It intercepts your commit message, analyzes your changes, and suggests a better 
 
 You can even skip writing a message entirely.
 cim-cli can generate a meaningful commit message based only on your changes.
+
+---
 
 ## Installation
 You can download prebuilt binaries for Linux, macOS and Windows.
@@ -80,46 +80,7 @@ Move-Item .\cim-cli.exe "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\"
 cim-cli --version
 ```
 
-## Setup (Git Hook)
-
-To enable automatic commit message improvement, install the git hook:
-
-```bash
-# Into a git repository
-cim-cli init
-```
-Now, every time you run:
-
-`git commit`
-
-cim-cli will intercept and improve your commit message automatically.
-
-## Usage
-
-### Automatic (Git Hook)
-
-Just commit as usual:
-
-```bash
-# example
-git commit -m "fix"
-```
-cim-cli will suggest an improved message before completing the commit.
-
-### Manual
-
-![alt text](docs/demos/manual.gif)
-
-You can also improve messages manually:
-```bash
-cim-cli improve -m "fix login"
-```
-or:
-```bash
-cim-cli improve
-```
-
-This is useful when you want to refine a message outside the commit flow.
+---
 
 ## Configuration
 
@@ -133,8 +94,6 @@ You can configure cim-cli in three levels:
 - **Repo-user** → applies only to you, inside a specific repository (`.git/.cim-cli/`)
 - **Repo** → shared with the team and versioned in the repository (`.cim-cli/`)
 
----
-
 ### Priority
 
 Configuration is merged by priority:
@@ -142,10 +101,7 @@ Configuration is merged by priority:
 global < repo-user < repo
 ```
 
-
 The repository configuration always has the highest priority, ensuring consistency across teams.
-
----
 
 ### Smart merging
 
@@ -157,8 +113,6 @@ For example:
 - Diff limit can come from `global`
 
 This allows flexible setups without overriding everything.
-
----
 
 ### Examples
 
@@ -198,6 +152,52 @@ View the final merged configuration:
 cim-cli config show
 ```
 
+### API Key Configuration
+You need to set up an API key configuration in the configuration edit
+
+---
+
+## Setup (Git Hook)
+
+To enable automatic commit message improvement, install the git hook:
+
+```bash
+# Into a git repository
+cim-cli init
+```
+Now, every time you run:
+
+`git commit`
+
+cim-cli will intercept and improve your commit message automatically.
+
+## Usage
+
+### Automatic (Git Hook)
+
+Just commit as usual:
+
+```bash
+# example
+git commit -m "fix"
+```
+cim-cli will suggest an improved message before completing the commit.
+
+### Manual
+
+You can also improve messages manually:
+```bash
+cim-cli improve -m "fix login"
+```
+or:
+```bash
+cim-cli improve
+```
+
+This is useful when you want to refine a message outside the commit flow.
+
+---
+
 ## Why cim-cli?
 
 There are many tools that help enforce commit message standards, like commit linters and git hooks.
@@ -214,6 +214,8 @@ Instead of rejecting your commits, it helps you write better ones.
 Most tools focus on enforcing rules.
 
 cim-cli focuses on making it effortless to follow them.
+
+---
 
 ## Support the project
 
