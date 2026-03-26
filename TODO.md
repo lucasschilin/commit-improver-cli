@@ -10,4 +10,3 @@
 - [ ] Script de install e update usando curl...install.sh
 - [ ] Salvar logs
 - [ ] Coletar métricas
-- [ ] Adicionar GIFs no README
