@@ -52,18 +52,21 @@ var hookCmd = &cobra.Command{
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(*cfg.ImprovementRequestTimeout)*time.Second)
 		defer cancel()
 
+		spinner := ui.New("Improving commit message...\n")
+		spinner.Start()
+		defer spinner.Stop()
+
+		finalPrompt, err := prompt.Prompt(repoRoot, message, diff, cfg.Language)
+		if err != nil {
+			return fmt.Errorf("Prompt error: %v", err)
+		}
+
 		provider, err := ai.NewProvider(ctx, cfg)
 		if err != nil {
 			return fmt.Errorf("Provider error: %v", err)
 		}
 
-		prompt := prompt.Build(message, diff, cfg.Language)
-
-		spinner := ui.New("Improving commit message...\n")
-		spinner.Start()
-		defer spinner.Stop()
-
-		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
+		improvedMessage, err := provider.ImproveCommitMessage(ctx, finalPrompt)
 		if err != nil {
 			spinner.Stop()
 			return fmt.Errorf("✖ Failed to improve commit: %v", err)

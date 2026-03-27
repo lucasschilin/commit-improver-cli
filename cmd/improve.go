@@ -53,14 +53,30 @@ var improveCmd = &cobra.Command{
 			return fmt.Errorf("Config error: %v", err)
 		}
 
+		diff := ""
+		if cfg.DiffLimit != nil {
+			diff, err = git.GetStagedDiff()
+			if err != nil {
+				return fmt.Errorf("Error reading diff: %v", err)
+			}
+			diff = git.LimitDiff(diff, *cfg.DiffLimit)
+		}
+
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(*cfg.ImprovementRequestTimeout)*time.Second)
 		defer cancel()
 
-		prompt := prompt.Build(message, "", cfg.Language)
+		spinner := ui.New("Improving commit message...\n")
+		spinner.Start()
+		defer spinner.Stop()
+
+		finalPrompt, err := prompt.Prompt(repoRoot, message, diff, cfg.Language)
+		if err != nil {
+			return fmt.Errorf("Prompt error: %v", err)
+		}
 
 		if promptFlag {
 			fmt.Println("=== GENERATED PROMPT ===")
-			fmt.Println(prompt)
+			fmt.Println(finalPrompt)
 			return nil
 		}
 
@@ -69,11 +85,7 @@ var improveCmd = &cobra.Command{
 			return fmt.Errorf("Error creating AI provider: %v", err)
 		}
 
-		spinner := ui.New("Improving commit message...\n")
-		spinner.Start()
-		defer spinner.Stop()
-
-		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
+		improvedMessage, err := provider.ImproveCommitMessage(ctx, finalPrompt)
 		if err != nil {
 			spinner.Stop()
 			return fmt.Errorf("✖ Failed to improve commit: %v", err)
