@@ -1,11 +1,9 @@
 package prompt
 
-import "fmt"
-
 // Build cria um prompt estruturado e determinístico para geração de commits.
 // Agora também permite body opcional quando necessário.
-func Build(message string, diff string, language string) string {
-	return fmt.Sprintf(`
+func Default() string {
+	prompt := `
 You are a senior software engineer specialized in writing high-quality git commit messages.
 
 Your task is to rewrite the given commit message following the Conventional Commits specification.
@@ -14,7 +12,7 @@ Your task is to rewrite the given commit message following the Conventional Comm
 Produce a clear, standardized, and meaningful commit message.
 
 ## Rules (STRICT)
-- Use %s language
+- Use {{LANGUAGE}} language
 - Maximum 72 characters for the title
 - Use imperative mood (e.g., "add", "fix", "remove") and address the subject in the third person singular (e.g., "if applied, the commit ...")
 - Follow format: <type>(scope): <description>
@@ -52,12 +50,14 @@ Produce a clear, standardized, and meaningful commit message.
 ## Input
 
 Original message:
-%s
+{{MESSAGE}}
 
 Git diff (optional):
-%s
+{{DIFF}}
 
 ## Output
 Return ONLY the final commit message, nothing else.
-`, language, message, diff)
+`
+
+	return prompt
 }
