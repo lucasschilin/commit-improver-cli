@@ -4,7 +4,6 @@
 - [ ] Implementar edição de configurações iniciais por meio de interface interativa (estilo Angular CLI)
 - [ ] Exibir a origem das configurações no comando `cim-cli config show`
 - [ ] Separar o valor da `API_KEY` em um arquivo dedicado
-- [ ] Permitir definição de prompt personalizado (armazenado em arquivo `PROMPT.md` no diretório de configuração)
 - [ ] Adicionar arquivos auxiliares (`ROADMAP.md`, `CONTRIBUTING.md`)
 - [ ] Adicionar testes automatizados
 - [ ] Script de install e update usando curl...install.sh

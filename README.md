@@ -123,11 +123,11 @@ This allows flexible setups without overriding everything.
 You can use English globally:
 
 ```bash
-cim-cli config edit --global
+cim-cli config params edit --global
 ```
 And Portuguese in a specific repository:
 ```bash
-cim-cli config edit --repo-user
+cim-cli config params edit --repo-user
 ```
 
 You can check the configurations options using:
@@ -139,19 +139,19 @@ cim-cli config template
 
 Edit configuration:
 ```bash
-cim-cli config edit --global
-cim-cli config edit --repo
-cim-cli config edit --repo-user
+cim-cli config params edit --global
+cim-cli config params edit --repo
+cim-cli config params edit --repo-user
 ```
 View configuration:
 ```bash
-cim-cli config show --global
-cim-cli config show --repo
-cim-cli config show --repo-user
+cim-cli config params show --global
+cim-cli config params show --repo
+cim-cli config params show --repo-user
 ```
 View the final merged configuration:
 ```bash
-cim-cli config show
+cim-cli config params show
 ```
 
 ### API Key Configuration
