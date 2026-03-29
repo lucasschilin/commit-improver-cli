@@ -1,7 +1,5 @@
 <p align="center">
-  
   <img src="docs/images/logo.png" width="200" />
-
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-blue" />
@@ -165,7 +163,7 @@ To enable automatic commit message improvement, install the git hook:
 
 ```bash
 # Into a git repository
-cim-cli init
+cim-cli hook-install
 ```
 Now, every time you run:
 
