@@ -8,9 +8,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "Initialize Commit Improver Hook",
+var hookInstallCmd = &cobra.Command{
+	Use:   "hook-install",
+	Short: "Install hook",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
@@ -34,5 +34,5 @@ var initCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(hookInstallCmd)
 }

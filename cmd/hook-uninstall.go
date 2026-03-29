@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var deinitCmd = &cobra.Command{
-	Use:   "deinit",
+var hookUninstallCmd = &cobra.Command{
+	Use:   "hook-uninstall",
 	Short: "Remove cim-cli git hook",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
@@ -18,15 +18,15 @@ var deinitCmd = &cobra.Command{
 
 		err = git.RemoveCommitMsgHook(repoRoot)
 		if err != nil {
-			return fmt.Errorf("Error removing cim-cli hook: %v", err)
+			return fmt.Errorf("Error uninstalling cim-cli hook: %v", err)
 		}
 
-		fmt.Println("cim-cli hook removed :(")
+		fmt.Println("cim-cli hook uninstalled :(")
 
 		return nil
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(deinitCmd)
+	rootCmd.AddCommand(hookUninstallCmd)
 }
