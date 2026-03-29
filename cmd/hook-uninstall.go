@@ -9,7 +9,7 @@ import (
 
 var hookUninstallCmd = &cobra.Command{
 	Use:   "hook-uninstall",
-	Short: "Remove cim-cli git hook",
+	Short: "Uninstall git hook",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
