@@ -72,7 +72,7 @@ Invoke-WebRequest -Uri https://github.com/lucasschilin/cim-cli/releases/latest/d
 # Extract the zip
 Expand-Archive cim-cli.zip
 # Move the binary to a folder in your PATH (example)
-Move-Item .\cim-cli.exe "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\"
+Move-Item .\cim-cli\cim-cli.exe "$env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\"
 ```
 
 ### Verify Installation
