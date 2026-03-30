@@ -21,7 +21,7 @@ var hookUninstallCmd = &cobra.Command{
 			return fmt.Errorf("Error uninstalling cim-cli hook: %v", err)
 		}
 
-		fmt.Println("cim-cli hook uninstalled :(")
+		fmt.Println("\u2705 cim-cli hook UNINSTALLED successfully")
 
 		return nil
 	},

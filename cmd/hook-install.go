@@ -27,7 +27,7 @@ var hookInstallCmd = &cobra.Command{
 
 		}
 
-		fmt.Println("cim-cli hook installed :D")
+		fmt.Println("\u2705 cim-cli hook INSTALLED successfully")
 
 		return nil
 	},
