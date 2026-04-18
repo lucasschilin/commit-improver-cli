@@ -5,17 +5,21 @@ import (
 	"strings"
 )
 
-func ReadCommitMessage(path string) (string, error) {
+func ReadCommitMessage(path string) (string, bool, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return "", err
+		return "", false, err
 	}
 
 	raw := string(data)
+	lines := strings.Split(raw, "\n")
+
+	if len(lines) > 0 && strings.TrimSpace(lines[0]) == "#ignore" {
+		return raw, true, nil
+	}
 
 	var filtered []string
 
-	lines := strings.Split(raw, "\n")
 	for _, line := range lines {
 		trimmed := strings.TrimSpace(line)
 
@@ -29,7 +33,7 @@ func ReadCommitMessage(path string) (string, error) {
 	message := strings.Join(filtered, "\n")
 	message = strings.TrimSpace(message)
 
-	return message, nil
+	return message, false, nil
 }
 
 func WriteCommitMessage(path string, message string) error {
